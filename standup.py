@@ -121,7 +121,6 @@ def send(dry_run):
         else:
             slack.api_call(
                 'chat.postMessage',
-                # channel='U9KPX3Z1V',
                 channel=channel,
                 text=rendered_text,
                 as_user=True
