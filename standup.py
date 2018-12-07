@@ -69,8 +69,7 @@ def generate_new_standup_data(from_date, to_date):
     input_standup_path = get_standup_file_path(from_date)
     output_standup_path = get_standup_file_path(to_date)
 
-    with open(input_standup_path) as input_data_file, \
-            open(output_standup_path, 'x') as output_data_file:
+    with open(input_standup_path) as input_data_file:
 
         output_data = yaml.safe_load(input_data_file)
 
@@ -81,6 +80,7 @@ def generate_new_standup_data(from_date, to_date):
                 'projects': [],
             }]
 
+    with open(output_standup_path, 'x') as output_data_file:
         yaml.dump(output_data, output_data_file)
 
 
