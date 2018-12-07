@@ -5,3 +5,6 @@ __pycache__/
 
 # Config secrets
 config.ini
+
+# Generated data files
+data/

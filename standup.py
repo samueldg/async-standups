@@ -17,6 +17,7 @@ TEMPLATE_FILE = 'template.md.tpl'
 TODAY_TIME_STRUCT = time.localtime()
 TODAY = datetime(*TODAY_TIME_STRUCT[:3])  # Keep only year, month and day
 
+DATA_FOLDER = 'data'
 YEAR_FOLDER_FORMAT = r'%Y'  # e.g. '2018'
 MONTH_FOLDER_FORMAT = r'%m - %B'  # e.g. '06 - June'
 STANDUP_FILENAME_FORMAT = r'%Y-%m-%d.yml'  # e.g. '2018-01-09.yml'
@@ -61,7 +62,7 @@ def get_standup_file_path(date):
     year_folder = date.strftime(YEAR_FOLDER_FORMAT)
     month_folder = date.strftime(MONTH_FOLDER_FORMAT)
     standup_filename = date.strftime(STANDUP_FILENAME_FORMAT)
-    return Path(year_folder, month_folder, standup_filename)
+    return Path(DATA_FOLDER, year_folder, month_folder, standup_filename)
 
 
 def generate_new_standup_data(from_date, to_date):
