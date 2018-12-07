@@ -2,6 +2,7 @@ import configparser
 import time
 from datetime import datetime
 from datetime import timedelta
+from enum import IntEnum
 from pathlib import Path
 
 import click
@@ -20,10 +21,17 @@ YEAR_FOLDER_FORMAT = r'%Y'  # e.g. '2018'
 MONTH_FOLDER_FORMAT = r'%m - %B'  # e.g. '06 - June'
 STANDUP_FILENAME_FORMAT = r'%Y-%m-%d.yml'  # e.g. '2018-01-09.yml'
 
-DAYS_OFF = (
-    5,  # Saturday
-    6,  # Sunday
+
+WeekDays = IntEnum(
+    'WeekDays',
+    'MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY',
+    start=0,
 )
+
+DAYS_OFF = {
+    WeekDays.SATURDAY,
+    WeekDays.SUNDAY,
+}
 
 
 def read_config():
