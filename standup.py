@@ -11,7 +11,7 @@ import yaml
 from slackclient import SlackClient
 
 
-CONFIG_FILENAME = 'config.ini'
+CONFIG_FILE = 'config.ini'
 TEMPLATE_FILE = 'template.md.tpl'
 
 TODAY_TIME_STRUCT = time.localtime()
@@ -37,7 +37,7 @@ DAYS_OFF = {
 
 def read_config():
     config = configparser.ConfigParser()
-    config.read(CONFIG_FILENAME)
+    config.read(CONFIG_FILE)
     return config
 
 
