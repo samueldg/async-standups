@@ -65,7 +65,7 @@ def get_standup_file_path(date):
     return Path(DATA_FOLDER, year_folder, month_folder, standup_filename)
 
 
-def generate_new_standup_data(from_date, to_date):
+def generate_new_standup_data(from_date, to_date, interactive=False):
     input_standup_path = get_standup_file_path(from_date)
     output_standup_path = get_standup_file_path(to_date)
 
@@ -83,12 +83,21 @@ def generate_new_standup_data(from_date, to_date):
     with open(output_standup_path, 'x') as output_data_file:
         yaml.dump(output_data, output_data_file)
 
+    if interactive:
+        click.edit(
+            filename=output_standup_path,
+            extension='.yml',
+            editor='subl',
+            require_save=True,
+        )
+
 
 cli = click.Group()
 
 
 @cli.command()
-def copy():
+@click.option('--edit', '-e', is_flag=True, default=False)
+def copy(edit):
     """Create the standup file data for today (if nonexistent)
     or tomorrow (otherwise).
     """
@@ -99,7 +108,11 @@ def copy():
         from_date = TODAY
         to_date = TODAY + timedelta(days=1)  # Tomorrow
 
-    generate_new_standup_data(from_date, to_date)
+    generate_new_standup_data(
+        from_date,
+        to_date,
+        interactive=edit,
+    )
 
 
 @cli.command()
