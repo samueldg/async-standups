@@ -28,5 +28,6 @@ chmod 600 config.ini
 
 ## Usage
 
+* `python standup.py --help`: Display general usage help.
 * `python standup.py copy`: Copy yesterday/today's standup file for the next day.
 * `python standup.py publish`: Publish your update on the right Slack channel.
