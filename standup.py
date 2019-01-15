@@ -118,6 +118,10 @@ def copy(edit):
 @cli.command()
 @click.option('--dry-run', '-n', is_flag=True, default=False)
 def send(dry_run):
+    """Send the standup data to the appropriate Slack channel.
+
+    The message will be formatted as a markdown code block.
+    """
     config = read_config()
     slack = SlackClient(config['slack']['api_token'])
 
