@@ -98,8 +98,10 @@ cli = click.Group()
 @cli.command()
 @click.option('--edit', '-e', is_flag=True, default=False)
 def copy(edit):
-    """Create the standup file data for today (if nonexistent)
-    or tomorrow (otherwise).
+    """Create the standup file data for today or tomorrow.
+
+    If the data file for today exists, one will be created for tomorrow.
+    Otherwise, yesterday's file will be used to create today's.
     """
     if not get_standup_file_path(TODAY).exists():
         from_date = TODAY - timedelta(days=1)  # Yesterday
