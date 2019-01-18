@@ -152,7 +152,7 @@ def send(dry_run):
                 'chat.postMessage',
                 channel=channel,
                 text=rendered_text,
-                as_user=True
+                as_user=True,
             )
 
 
