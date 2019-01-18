@@ -54,8 +54,15 @@ def get_formatted_standup(data):
 def get_previous_work_day(date):
     previous_day = date - timedelta(days=1)
     while previous_day.weekday() in DAYS_OFF:
-        previous_day = date - timedelta(days=1)
+        previous_day = previous_day - timedelta(days=1)
     return previous_day
+
+
+def get_next_work_day(date):
+    next_day = date + timedelta(days=1)
+    while next_day.weekday() in DAYS_OFF:
+        next_day = next_day + timedelta(days=1)
+    return next_day
 
 
 def get_standup_file_path(date):
@@ -104,11 +111,11 @@ def copy(edit):
     Otherwise, yesterday's file will be used to create today's.
     """
     if not get_standup_file_path(TODAY).exists():
-        from_date = TODAY - timedelta(days=1)  # Yesterday
+        from_date = get_previous_work_day(TODAY)
         to_date = TODAY
     else:
         from_date = TODAY
-        to_date = TODAY + timedelta(days=1)  # Tomorrow
+        to_date = get_next_work_day(TODAY)
 
     generate_new_standup_data(
         from_date,
