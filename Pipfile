@@ -10,6 +10,10 @@ pyyaml = "~=3.13"
 slackclient = "~=1.3"
 
 [dev-packages]
+flake8 = "~=3.6"
+flake8-colors = "~=0.1.6"
+flake8-commas = "~=2.0"
+flake8-isort = "~=2.6"
 
 [requires]
 python_version = "3.7"
