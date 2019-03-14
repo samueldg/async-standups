@@ -43,7 +43,7 @@ def read_config():
 
 def get_formatted_standup(data):
     """From the data dictionary, get the markdown-formatted standup"""
-    template_loader = jinja2.FileSystemLoader(searchpath='.')
+    template_loader = jinja2.PackageLoader(package_name='standup')
     template_env = jinja2.Environment(
         loader=template_loader,
     )

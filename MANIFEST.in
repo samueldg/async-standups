@@ -1,5 +1,5 @@
 include README.md
-include standup/template.md.j2
+include standup/templates/*.j2
 
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
