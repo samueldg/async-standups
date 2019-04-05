@@ -23,6 +23,8 @@ setup(
     long_description=readme,
     author='Samuel Dion-Girardeau',
     author_email='samuel.diongirardeau@gmail.com',
+    maintainer='Samuel Dion-Girardeau',
+    maintainer_email='samuel.diongirardeau@gmail.com',
     url='https://github.com/samueldg/async-standups',
     packages=find_packages(
         include=[
@@ -34,6 +36,8 @@ setup(
     install_requires=REQUIREMENTS,
     zip_safe=False,
     keywords='standup',
+    python_requires='~=3.6',
+    platforms='any',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Console',
@@ -45,8 +49,10 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Utilities',
     ],
+    license='MIT',
     entry_points={
         'console_scripts': [
             'standup = standup.main:cli',
