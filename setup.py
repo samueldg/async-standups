@@ -6,6 +6,8 @@ with open('README.md') as readme_file:
     readme = readme_file.read()
 
 
+VERSION = '0.0.1'
+
 REQUIREMENTS = [
     'click~=7.0',
     'jinja2~=2.10',
@@ -16,6 +18,7 @@ REQUIREMENTS = [
 
 setup(
     name='standup',
+    version=VERSION,
     description='Write, publish, and keep track of your async standup reports',
     long_description=readme,
     author='Samuel Dion-Girardeau',
