@@ -1,3 +1,5 @@
+import re
+
 from setuptools import find_packages
 from setuptools import setup
 
@@ -5,8 +7,10 @@ from setuptools import setup
 with open('README.md') as readme_file:
     readme = readme_file.read()
 
+with open('standup/__init__.py') as f:
+    # Not importing the file in setup.py!
+    VERSION = re.search(r"__version__ = '(?P<version>.*?)'", f.read()).group('version')
 
-VERSION = '0.0.1'
 
 REQUIREMENTS = [
     'click~=7.0',
