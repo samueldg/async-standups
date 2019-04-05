@@ -44,8 +44,9 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Topic :: Utilities',
     ],
-    entry_points='''
-        [console_scripts]
-        standup=standup.main:cli
-    ''',
+    entry_points={
+        'console_scripts': [
+            'standup = standup.main:cli',
+        ],
+    },
 )
