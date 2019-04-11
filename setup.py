@@ -15,7 +15,7 @@ with open('standup/__init__.py') as f:
 REQUIREMENTS = [
     'click~=7.0',
     'jinja2~=2.10',
-    'pyyaml~=3.13',
+    'pyyaml~=5.1',
     'slackclient~=1.3',
 ]
 
