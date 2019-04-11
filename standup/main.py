@@ -12,7 +12,7 @@ from slackclient import SlackClient
 
 
 CONFIG_FILE = 'config.ini'
-TEMPLATE_FILE = 'template.md.j2'
+TEMPLATE_FILE = 'standup.md.j2'
 
 TODAY_TIME_STRUCT = time.localtime()
 TODAY = datetime(*TODAY_TIME_STRUCT[:3])  # Keep only year, month and day
