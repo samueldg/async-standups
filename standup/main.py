@@ -91,7 +91,7 @@ def generate_new_standup_data(from_date, to_date, interactive=False):
     month_directory.mkdir(parents=True, exist_ok=True)
 
     with open(output_standup_path, 'x') as output_data_file:
-        yaml.dump(output_data, output_data_file)
+        yaml.dump(output_data, output_data_file, default_flow_style=None, width=120)
 
     if interactive:
         click.edit(
