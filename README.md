@@ -10,24 +10,12 @@ You will need [Python 3.7](https://www.python.org/downloads/) and [Pipenv](https
 
 ```sh
 pipenv install
-```
-
-In order to post your status to Slack, you will need to [get a Slack API token](https://api.slack.com/custom-integrations/legacy-tokens), and create a `config.ini` file like so:
-
-```ini
-[slack]
-
-api_token = MY_SLACK_API_TOKEN
-```
-
-Since this file will contain a token to act on Slack on your behalf, you should make sure only you have access to it:
-
-```sh
-chmod 600 config.ini
+pipenv run standup bootstrap
 ```
 
 ## Usage
 
 * `standup --help`: Display general usage help.
+* `standup bootstrap`: Create the basic project configuration.
 * `standup copy`: Copy yesterday/today's standup file for the next day.
 * `standup publish`: Publish your update on the right Slack channel.
