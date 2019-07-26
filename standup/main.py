@@ -1,4 +1,6 @@
 import configparser
+import os
+import stat
 import time
 from datetime import datetime
 from datetime import timedelta
@@ -12,7 +14,8 @@ from slackclient import SlackClient
 
 
 CONFIG_FILE = 'config.ini'
-TEMPLATE_FILE = 'standup.md.j2'
+STANDUP_TEMPLATE_FILE = 'standup.md.j2'
+CONFIG_TEMPLATE_FILE = 'config.ini.j2'
 
 TODAY_TIME_STRUCT = time.localtime()
 TODAY = datetime(*TODAY_TIME_STRUCT[:3])  # Keep only year, month and day
@@ -35,6 +38,14 @@ DAYS_OFF = {
 }
 
 
+TEMPLATE_LOADER = jinja2.PackageLoader(package_name='standup')
+TEMPLATE_ENV = jinja2.Environment(
+    loader=TEMPLATE_LOADER,
+)
+STANDUP_TEMPLATE = TEMPLATE_ENV.get_template(STANDUP_TEMPLATE_FILE)
+CONFIG_TEMPLATE = TEMPLATE_ENV.get_template(CONFIG_TEMPLATE_FILE)
+
+
 def read_config():
     config = configparser.ConfigParser()
     config.read(CONFIG_FILE)
@@ -43,12 +54,7 @@ def read_config():
 
 def get_formatted_standup(data):
     """From the data dictionary, get the markdown-formatted standup"""
-    template_loader = jinja2.PackageLoader(package_name='standup')
-    template_env = jinja2.Environment(
-        loader=template_loader,
-    )
-    template = template_env.get_template(TEMPLATE_FILE)
-    return template.render(sections=data)
+    return STANDUP_TEMPLATE.render(sections=data)
 
 
 def get_previous_work_day(date):
@@ -154,6 +160,25 @@ def publish(dry_run):
                 text=rendered_text,
                 as_user=True,
             )
+
+
+@cli.command()
+def bootstrap():
+    """Create the basic project setup and configuration.
+
+    This will:
+      - Create the scaffolding for data files.
+      - Create a config file to store your Slack API token.
+    """
+    click.echo('You will be redirected to the Slack docs page to get a token.', color='green')
+    click.echo('Please sign in and copy the legacy API token to your clipboard.', color='green')
+    click.pause('Press any key to to open a new browser tab to get your token...')
+    click.launch('https://api.slack.com/custom-integrations/legacy-tokens')
+    token = click.prompt('Copy your Slack token here, then press <enter>')
+    config = CONFIG_TEMPLATE.render(token=token)
+    with open(CONFIG_FILE, 'x') as config_file:
+        config_file.write(config)
+    os.chmod(CONFIG_FILE, stat.S_IRUSR | stat.S_IWUSR)
 
 
 if __name__ == '__main__':
