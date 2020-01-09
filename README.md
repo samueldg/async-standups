@@ -6,11 +6,11 @@ The standup data will be saved and manipulated in YAML files, and published to S
 
 ## Setup
 
-You will need [Python 3.7](https://www.python.org/downloads/) and [Pipenv](https://pipenv.readthedocs.io/en/latest/#install-pipenv-today) installed. Then clone this repo and run:
+You will need [Python 3.6+](https://www.python.org/downloads/) and [Poetry](https://github.com/python-poetry/poetry) installed. Then clone this repo and run:
 
 ```sh
-pipenv install
-pipenv run standup bootstrap
+poetry install
+poetry run standup bootstrap
 ```
 
 ## Usage
