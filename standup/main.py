@@ -13,23 +13,21 @@ import yaml
 from slackclient import SlackClient
 
 
-CONFIG_FILE = 'config.ini'
-STANDUP_TEMPLATE_FILE = 'standup.md.j2'
-CONFIG_TEMPLATE_FILE = 'config.ini.j2'
+CONFIG_FILE = "config.ini"
+STANDUP_TEMPLATE_FILE = "standup.md.j2"
+CONFIG_TEMPLATE_FILE = "config.ini.j2"
 
 TODAY_TIME_STRUCT = time.localtime()
 TODAY = datetime(*TODAY_TIME_STRUCT[:3])  # Keep only year, month and day
 
-DATA_FOLDER = 'data'
-YEAR_FOLDER_FORMAT = r'%Y'  # e.g. '2018'
-MONTH_FOLDER_FORMAT = r'%m - %B'  # e.g. '06 - June'
-STANDUP_FILENAME_FORMAT = r'%Y-%m-%d.yml'  # e.g. '2018-01-09.yml'
+DATA_FOLDER = "data"
+YEAR_FOLDER_FORMAT = r"%Y"  # e.g. '2018'
+MONTH_FOLDER_FORMAT = r"%m - %B"  # e.g. '06 - June'
+STANDUP_FILENAME_FORMAT = r"%Y-%m-%d.yml"  # e.g. '2018-01-09.yml'
 
 
 WeekDays = IntEnum(
-    'WeekDays',
-    'MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY',
-    start=0,
+    "WeekDays", "MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY", start=0,
 )
 
 DAYS_OFF = {
@@ -38,10 +36,8 @@ DAYS_OFF = {
 }
 
 
-TEMPLATE_LOADER = jinja2.PackageLoader(package_name='standup')
-TEMPLATE_ENV = jinja2.Environment(
-    loader=TEMPLATE_LOADER,
-)
+TEMPLATE_LOADER = jinja2.PackageLoader(package_name="standup")
+TEMPLATE_ENV = jinja2.Environment(loader=TEMPLATE_LOADER)
 STANDUP_TEMPLATE = TEMPLATE_ENV.get_template(STANDUP_TEMPLATE_FILE)
 CONFIG_TEMPLATE = TEMPLATE_ENV.get_template(CONFIG_TEMPLATE_FILE)
 
@@ -87,23 +83,20 @@ def generate_new_standup_data(from_date, to_date, interactive=False):
         output_data = yaml.safe_load(input_data_file)
 
         for channel, standup_data in output_data.items():
-            standup_data['yesterday'] = standup_data['today']
-            standup_data['today'] = [{
-                'action': 'TODO',
-                'projects': [],
-            }]
+            standup_data["yesterday"] = standup_data["today"]
+            standup_data["today"] = [{"action": "TODO", "projects": []}]
 
     month_directory = output_standup_path.parent
     month_directory.mkdir(parents=True, exist_ok=True)
 
-    with open(output_standup_path, 'x') as output_data_file:
+    with open(output_standup_path, "x") as output_data_file:
         yaml.dump(output_data, output_data_file, default_flow_style=None, width=120)
 
     if interactive:
         click.edit(
             filename=output_standup_path,
-            extension='.yml',
-            editor='subl',
+            extension=".yml",
+            editor="subl",
             require_save=True,
         )
 
@@ -112,7 +105,7 @@ cli = click.Group()
 
 
 @cli.command()
-@click.option('--edit', '-e', is_flag=True, default=False)
+@click.option("--edit", "-e", is_flag=True, default=False)
 def copy(edit):
     """Create the standup file data for today or tomorrow.
 
@@ -127,21 +120,19 @@ def copy(edit):
         to_date = get_next_work_day(TODAY)
 
     generate_new_standup_data(
-        from_date,
-        to_date,
-        interactive=edit,
+        from_date, to_date, interactive=edit,
     )
 
 
 @cli.command()
-@click.option('--dry-run', '-n', is_flag=True, default=False)
+@click.option("--dry-run", "-n", is_flag=True, default=False)
 def publish(dry_run):
     """Publish the standup data to the appropriate Slack channel.
 
     The message will be formatted as a markdown code block.
     """
     config = read_config()
-    slack = SlackClient(config['slack']['api_token'])
+    slack = SlackClient(config["slack"]["api_token"])
 
     standup_data_file_path = get_standup_file_path(TODAY)
 
@@ -152,13 +143,10 @@ def publish(dry_run):
         rendered_text = get_formatted_standup(standup_data)
 
         if dry_run:
-            print(f'#{channel}\n{rendered_text}')
+            print(f"#{channel}\n{rendered_text}")
         else:
             slack.api_call(
-                'chat.postMessage',
-                channel=channel,
-                text=rendered_text,
-                as_user=True,
+                "chat.postMessage", channel=channel, text=rendered_text, as_user=True,
             )
 
 
@@ -170,16 +158,21 @@ def bootstrap():
       - Create the scaffolding for data files.
       - Create a config file to store your Slack API token.
     """
-    click.echo('You will be redirected to the Slack docs page to get a token.', color='green')
-    click.echo('Please sign in and copy the legacy API token to your clipboard.', color='green')
-    click.pause('Press any key to to open a new browser tab to get your token...')
-    click.launch('https://api.slack.com/custom-integrations/legacy-tokens')
-    token = click.prompt('Copy your Slack token here, then press <enter>')
+    click.echo(
+        "You will be redirected to the Slack docs page to get a token.", color="green",
+    )
+    click.echo(
+        "Please sign in and copy the legacy API token to your clipboard.",
+        color="green",
+    )
+    click.pause("Press any key to to open a new browser tab to get your token...")
+    click.launch("https://api.slack.com/custom-integrations/legacy-tokens")
+    token = click.prompt("Copy your Slack token here, then press <enter>")
     config = CONFIG_TEMPLATE.render(token=token)
-    with open(CONFIG_FILE, 'x') as config_file:
+    with open(CONFIG_FILE, "x") as config_file:
         config_file.write(config)
     os.chmod(CONFIG_FILE, stat.S_IRUSR | stat.S_IWUSR)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     cli()
