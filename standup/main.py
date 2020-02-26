@@ -131,8 +131,6 @@ def publish(dry_run):
 
     The message will be formatted as a markdown code block.
     """
-    config = read_config()
-    slack = SlackClient(config["slack"]["api_token"])
 
     standup_data_file_path = get_standup_file_path(TODAY)
 
@@ -145,6 +143,8 @@ def publish(dry_run):
         if dry_run:
             print(f"#{channel}\n{rendered_text}")
         else:
+            config = read_config()
+            slack = SlackClient(config["slack"]["api_token"])
             slack.api_call(
                 "chat.postMessage", channel=channel, text=rendered_text, as_user=True,
             )
