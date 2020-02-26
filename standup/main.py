@@ -131,7 +131,6 @@ def publish(dry_run):
 
     The message will be formatted as a markdown code block.
     """
-
     standup_data_file_path = get_standup_file_path(TODAY)
 
     with open(standup_data_file_path) as standup_data_file:
@@ -165,7 +164,7 @@ def bootstrap():
         "Please sign in and copy the legacy API token to your clipboard.",
         color="green",
     )
-    click.pause("Press any key to to open a new browser tab to get your token...")
+    click.pause("Press any key to open a new browser tab to get your token...")
     click.launch("https://api.slack.com/custom-integrations/legacy-tokens")
     token = click.prompt("Copy your Slack token here, then press <enter>")
     config = CONFIG_TEMPLATE.render(token=token)
