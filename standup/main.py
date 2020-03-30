@@ -10,7 +10,7 @@ from pathlib import Path
 import click
 import jinja2
 import yaml
-from slackclient import SlackClient
+from slack import WebClient
 
 
 CONFIG_FILE = "config.ini"
@@ -143,10 +143,8 @@ def publish(dry_run):
             print(f"#{channel}\n{rendered_text}")
         else:
             config = read_config()
-            slack = SlackClient(config["slack"]["api_token"])
-            slack.api_call(
-                "chat.postMessage", channel=channel, text=rendered_text, as_user=True,
-            )
+            slack = WebClient(token=config["slack"]["api_token"])
+            slack.chat_postMessage(channel=channel, text=rendered_text, as_user=True)
 
 
 @cli.command()
