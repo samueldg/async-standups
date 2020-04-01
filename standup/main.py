@@ -94,7 +94,7 @@ def generate_new_standup_data(from_date, to_date, interactive=False):
 
     if interactive:
         click.edit(
-            filename=output_standup_path,
+            filename=str(output_standup_path),
             extension=".yml",
             editor="subl",
             require_save=True,
