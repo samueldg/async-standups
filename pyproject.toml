@@ -32,7 +32,7 @@ classifiers = [
 python = "^3.6"
 click = "~=7.0"
 jinja2 = "~=2.11"
-pyyaml = "~=5.1"
+pyyaml = "~=5.4"
 slackclient = "~=2.5"
 
 [tool.poetry.dev-dependencies]
