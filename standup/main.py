@@ -27,7 +27,9 @@ STANDUP_FILENAME_FORMAT = r"%Y-%m-%d.yml"  # e.g. '2018-01-09.yml'
 
 
 WeekDays = IntEnum(
-    "WeekDays", "MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY", start=0,
+    "WeekDays",
+    "MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY",
+    start=0,
 )
 
 DAYS_OFF = {
@@ -126,7 +128,9 @@ def copy(edit):
         to_date = get_next_work_day(TODAY)
 
     generate_new_standup_data(
-        from_date, to_date, interactive=edit,
+        from_date,
+        to_date,
+        interactive=edit,
     )
 
 
@@ -162,7 +166,8 @@ def bootstrap():
       - Create a config file to store your Slack API token.
     """
     click.echo(
-        "You will be redirected to the Slack docs page to get a token.", color="green",
+        "You will be redirected to the Slack docs page to get a token.",
+        color="green",
     )
     click.echo(
         "Please sign in and copy the legacy API token to your clipboard.",
