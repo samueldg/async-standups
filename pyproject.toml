@@ -58,6 +58,7 @@ skip_glob = [
     ".vscode",
 ]
 line_length = 99
+lines_after_imports = 2
 
 [tool.poetry.scripts]
 standup = "standup.main:cli"

@@ -14,3 +14,4 @@ format = ${cyan}%(path)s${reset}:${yellow_bold}%(row)d${reset}:${green_bold}%(co
 # https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/
 # (This is not a Django project, but we keep the rules consistent.)
 max-line-length = 99
+inline-quotes = double
