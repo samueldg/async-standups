@@ -29,18 +29,35 @@ classifiers = [
 
 
 [tool.poetry.dependencies]
-python = "^3.6"
-click = "~=7.0"
-jinja2 = "~=2.11"
+python = "^3.8"
+click = "~=8.0"
+jinja2 = "~=3.0"
 pyyaml = "~=5.4"
-slackclient = "~=2.5"
+slackclient = "~=2.9"
 
 [tool.poetry.dev-dependencies]
 black = "~=19.10b0"
-flake8 = "~=3.6"
-flake8-colors = "~=0.1.6"
+flake8 = "~=3.9"
+flake8-colors = "~=0.1.9"
 flake8-commas = "~=2.0"
-flake8-isort = "~=2.6"
+flake8-isort = "~=4.0"
+flake8-quotes = "~=3.3"
+isort = {version = "~=5.9", extras = ["pyproject"]}
+
+[tool.isort]
+force_single_line = true
+sections = [
+    "STDLIB",
+    "THIRDPARTY",
+    "FIRSTPARTY",
+    "LOCALFOLDER",
+]
+skip_glob = [
+    ".git",
+    "__pycache__",
+    ".vscode",
+]
+line_length = 99
 
 [tool.poetry.scripts]
 standup = "standup.main:cli"
