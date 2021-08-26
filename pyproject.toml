@@ -36,7 +36,7 @@ pyyaml = "~=5.4"
 slackclient = "~=2.9"
 
 [tool.poetry.dev-dependencies]
-black = "~=19.10b0"
+black = "~=21.7b0"
 flake8 = "~=3.9"
 flake8-colors = "~=0.1.9"
 flake8-commas = "~=2.0"
