@@ -10,8 +10,5 @@ statistics = True
 # This just adds some color formatting to the standard output.
 format = ${cyan}%(path)s${reset}:${yellow_bold}%(row)d${reset}:${green_bold}%(col)d${reset}: ${red_bold}%(code)s${reset} %(text)s
 
-# The following settings are all based off suggestions made for Django development.
-# https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/
-# (This is not a Django project, but we keep the rules consistent.)
 max-line-length = 99
 inline-quotes = double
