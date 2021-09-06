@@ -104,7 +104,7 @@ def generate_new_standup_data(from_date, to_date, interactive=False):
         click.edit(
             filename=str(output_standup_path),
             extension=".yml",
-            editor="subl",
+            editor="code",
             require_save=True,
         )
 
