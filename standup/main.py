@@ -79,6 +79,7 @@ def get_standup_file_path(date):
 def generate_new_standup_data(from_date, to_date, interactive=False):
     input_standup_path = get_standup_file_path(from_date)
     output_standup_path = get_standup_file_path(to_date)
+    config = read_config()
 
     with open(input_standup_path) as input_data_file:
 
@@ -100,11 +101,12 @@ def generate_new_standup_data(from_date, to_date, interactive=False):
             allow_unicode=True,
         )
 
+    editor = config.get("editor", "path", fallback=None)
     if interactive:
         click.edit(
             filename=str(output_standup_path),
             extension=".yml",
-            editor="code",
+            editor=editor,
             require_save=True,
         )
 
