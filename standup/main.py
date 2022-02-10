@@ -10,7 +10,7 @@ from pathlib import Path
 import click
 import jinja2
 import yaml
-from slack import WebClient
+from slack_sdk import WebClient
 
 
 CONFIG_FILE = "config.ini"

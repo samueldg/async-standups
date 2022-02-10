@@ -34,7 +34,7 @@ python = "^3.8"
 click = "~=8.0"
 jinja2 = "~=3.0"
 pyyaml = "~=6.0"
-slackclient = "~=2.9"
+slack_sdk = "~=3.14"
 
 [tool.poetry.dev-dependencies]
 black = "~=22.0"
