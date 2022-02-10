@@ -12,9 +12,12 @@ import jinja2
 import yaml
 from slack_sdk import WebClient
 
+from .filters import emojify
+from .filters import slack_bold
+
 
 CONFIG_FILE = "config.ini"
-STANDUP_TEMPLATE_FILE = "standup.md.j2"
+STANDUP_TEMPLATE_FILE = "standup.slack.j2"
 CONFIG_TEMPLATE_FILE = "config.ini.j2"
 
 TODAY_TIME_STRUCT = time.localtime()
@@ -40,6 +43,8 @@ DAYS_OFF = {
 
 TEMPLATE_LOADER = jinja2.PackageLoader(package_name="standup")
 TEMPLATE_ENV = jinja2.Environment(loader=TEMPLATE_LOADER)
+TEMPLATE_ENV.filters["emojify"] = emojify
+TEMPLATE_ENV.filters["slack_bold"] = slack_bold
 STANDUP_TEMPLATE = TEMPLATE_ENV.get_template(STANDUP_TEMPLATE_FILE)
 CONFIG_TEMPLATE = TEMPLATE_ENV.get_template(CONFIG_TEMPLATE_FILE)
 
