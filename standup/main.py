@@ -175,24 +175,45 @@ def bootstrap():
 
     This will:
       - Create the scaffolding for data files.
-      - Create a config file to store your Slack API token.
+      - Create a file to store your Slack token and configuration.
     """
+    # Get the Slack app token
     click.echo(
-        "You will be redirected to the Slack docs page to get a token.",
+        "You will be redirected to Slack's app management.",
         color="green",
     )
     click.echo(
-        "Please sign in and copy the legacy API token to your clipboard.",
+        "Please get an app token for the app that will post your standups.",
+        color="green",
+    )
+    click.echo(
+        "The app will need the chat:write.customize permission.",
         color="green",
     )
     click.pause("Press any key to open a new browser tab to get your token...")
-    click.launch("https://api.slack.com/custom-integrations/legacy-tokens")
+    click.launch("https://app.slack.com/apps-manage/")
     token = click.prompt("Copy your Slack token here, then press <enter>")
-    config = CONFIG_TEMPLATE.render(token=token)
+
+    # Get other Slack config options
+    username = click.prompt("Slack username")
+    icon_emoji = click.prompt("Icon emoji")
+    icon_emoji = ":" + icon_emoji.strip(":") + ":"
+
+    # Render the config file
+    config = CONFIG_TEMPLATE.render(
+        token=token,
+        username=username,
+        icon_emoji=icon_emoji,
+    )
     with open(CONFIG_FILE, "x") as config_file:
         config_file.write(config)
     os.chmod(CONFIG_FILE, stat.S_IRUSR | stat.S_IWUSR)
 
+    # Indicate successful completion
+    click.echo(
+        "All set! Look at ./config.ini to view your config.",
+        color="green",
+    )
 
 if __name__ == "__main__":
     cli()
