@@ -148,6 +148,10 @@ def publish(dry_run):
 
     The message will be formatted as a markdown code block.
     """
+    config = read_config()
+    username = config["slack"]["username"]
+    icon_emoji = config["slack"]["icon_emoji"]
+
     standup_data_file_path = get_standup_file_path(TODAY)
 
     with open(standup_data_file_path) as standup_data_file:
@@ -157,15 +161,14 @@ def publish(dry_run):
         rendered_text = get_formatted_standup(standup_data)
 
         if dry_run:
-            print(f"#{channel}\n{rendered_text}")
+            print(f"#{channel} (as @{username} | {icon_emoji})\n{rendered_text}")
         else:
-            config = read_config()
             slack = WebClient(token=config["slack"]["api_token"])
             slack.chat_postMessage(
                 channel=channel,
                 text=rendered_text,
-                username=config["slack"]["username"],
-                icon_emoji=config["slack"]["icon_emoji"],
+                username=username,
+                icon_emoji=icon_emoji,
             )
 
 
@@ -214,6 +217,7 @@ def bootstrap():
         "All set! Look at ./config.ini to view your config.",
         color="green",
     )
+
 
 if __name__ == "__main__":
     cli()
