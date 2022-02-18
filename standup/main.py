@@ -161,7 +161,12 @@ def publish(dry_run):
         else:
             config = read_config()
             slack = WebClient(token=config["slack"]["api_token"])
-            slack.chat_postMessage(channel=channel, text=rendered_text, as_user=True)
+            slack.chat_postMessage(
+                channel=channel,
+                text=rendered_text,
+                username=config["slack"]["username"],
+                icon_emoji=config["slack"]["icon_emoji"],
+            )
 
 
 @cli.command()
