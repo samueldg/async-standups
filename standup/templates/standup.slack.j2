@@ -1,6 +1,6 @@
-{%- for section_name, section_items in sections.items() if section_items%}
+{%- for section_name, items in sections.items() if items%}
 {{ section_name|emojify }} {{ section_name|title|slack_bold }}:
-    {%- for section_item in section_items %}
-• {{ section_item }}
+    {%- for item in items %}
+• {{ item }}
     {%- endfor %}
 {% endfor -%}
