@@ -87,12 +87,10 @@ def generate_new_standup_data(from_date, to_date, interactive=False):
     config = read_config()
 
     with open(input_standup_path) as input_data_file:
-
         output_data = yaml.safe_load(input_data_file)
 
-        for channel, standup_data in output_data.items():
-            standup_data["yesterday"] = standup_data["today"]
-            standup_data["today"] = ["TODO"]
+    output_data["yesterday"] = output_data["today"]
+    output_data["today"] = ["TODO"]
 
     month_directory = output_standup_path.parent
     month_directory.mkdir(parents=True, exist_ok=True)
@@ -144,11 +142,12 @@ def copy(edit):
 @cli.command()
 @click.option("--dry-run", "-n", is_flag=True, default=False)
 def publish(dry_run):
-    """Publish the standup data to the appropriate Slack channel.
+    """Publish the standup data to the configured Slack channel.
 
     The message will be formatted as a markdown code block.
     """
     config = read_config()
+    channel = config["slack"]["channel"]
     username = config["slack"]["username"]
     icon_emoji = config["slack"]["icon_emoji"]
 
@@ -157,19 +156,18 @@ def publish(dry_run):
     with open(standup_data_file_path) as standup_data_file:
         standup_data = yaml.safe_load(standup_data_file)
 
-    for channel, standup_data in standup_data.items():
-        rendered_text = get_formatted_standup(standup_data)
+    rendered_text = get_formatted_standup(standup_data)
 
-        if dry_run:
-            print(f"#{channel} (as @{username} | {icon_emoji})\n{rendered_text}")
-        else:
-            slack = WebClient(token=config["slack"]["api_token"])
-            slack.chat_postMessage(
-                channel=channel,
-                text=rendered_text,
-                username=username,
-                icon_emoji=icon_emoji,
-            )
+    if dry_run:
+        print(f"#{channel} (as @{username} | {icon_emoji})\n{rendered_text}")
+    else:
+        slack = WebClient(token=config["slack"]["api_token"])
+        slack.chat_postMessage(
+            channel=channel,
+            text=rendered_text,
+            username=username,
+            icon_emoji=icon_emoji,
+        )
 
 
 @cli.command()
