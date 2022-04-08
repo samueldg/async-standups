@@ -1,6 +1,6 @@
 EMOJI_LOOKUP = {
     "blocked": "🚫",
-    "today": "🚧",
+    "today": "🏗",
     "yesterday": "⏪",
     "announcements": "📣",
 }
