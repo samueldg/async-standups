@@ -92,7 +92,7 @@ def generate_new_standup_data(from_date, to_date, interactive=False):
 
         for channel, standup_data in output_data.items():
             standup_data["yesterday"] = standup_data["today"]
-            standup_data["today"] = [{"action": "TODO", "projects": []}]
+            standup_data["today"] = ["TODO"]
 
     month_directory = output_standup_path.parent
     month_directory.mkdir(parents=True, exist_ok=True)
@@ -101,7 +101,7 @@ def generate_new_standup_data(from_date, to_date, interactive=False):
         yaml.dump(
             output_data,
             output_data_file,
-            default_flow_style=None,
+            default_flow_style=False,
             width=120,
             allow_unicode=True,
         )
