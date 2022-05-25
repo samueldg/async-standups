@@ -15,3 +15,10 @@ def emojify(name):
     if text:
         text += " "
     return text
+
+
+def ensure_list(value):
+    if isinstance(value, list):
+        return value
+    else:
+        return [value]

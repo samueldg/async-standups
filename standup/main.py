@@ -13,6 +13,7 @@ import yaml
 from slack_sdk import WebClient
 
 from .filters import emojify
+from .filters import ensure_list
 from .filters import slack_bold
 
 
@@ -43,8 +44,13 @@ DAYS_OFF = {
 
 TEMPLATE_LOADER = jinja2.PackageLoader(package_name="standup")
 TEMPLATE_ENV = jinja2.Environment(loader=TEMPLATE_LOADER)
-TEMPLATE_ENV.filters["emojify"] = emojify
-TEMPLATE_ENV.filters["slack_bold"] = slack_bold
+TEMPLATE_ENV.filters.update(
+    {
+        "emojify": emojify,
+        "slack_bold": slack_bold,
+        "ensure_list": ensure_list,
+    },
+)
 STANDUP_TEMPLATE = TEMPLATE_ENV.get_template(STANDUP_TEMPLATE_FILE)
 CONFIG_TEMPLATE = TEMPLATE_ENV.get_template(CONFIG_TEMPLATE_FILE)
 
