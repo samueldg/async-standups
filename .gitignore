@@ -26,3 +26,6 @@ config.ini
 
 # Generated data files
 data/
+
+# Linter cache
+.ruff_cache
