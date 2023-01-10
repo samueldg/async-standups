@@ -38,28 +38,26 @@ slack_sdk = "~=3.14"
 
 [tool.poetry.dev-dependencies]
 black = "~=22.0"
-flake8 = "~=4.0"
-flake8-colors = "~=0.1.9"
-flake8-commas = "~=2.1"
-flake8-isort = "~=4.1"
-flake8-quotes = "~=3.3"
-isort = {version = "~=5.10", extras = ["pyproject"]}
+ruff = "^0.0.216"
 
-[tool.isort]
-force_single_line = true
-sections = [
-    "STDLIB",
-    "THIRDPARTY",
-    "FIRSTPARTY",
-    "LOCALFOLDER",
+[tool.ruff]
+exclude = [
+    '.git',
+    '__pycache__',
+    '.vscode',
 ]
-skip_glob = [
-    ".git",
-    "__pycache__",
-    ".vscode",
+ignore = []
+line-length = 99
+select = [
+    'E',
+    'F',
+    'I',
+    'Q',
+    'W',
 ]
-line_length = 99
-lines_after_imports = 2
+
+[tool.ruff.isort]
+force-single-line = true
 
 [tool.poetry.scripts]
 standup = "standup.main:cli"

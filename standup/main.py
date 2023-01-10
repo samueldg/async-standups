@@ -16,7 +16,6 @@ from .filters import emojify
 from .filters import ensure_list
 from .filters import slack_bold
 
-
 CONFIG_FILE = "config.ini"
 STANDUP_TEMPLATE_FILE = "standup.slack.j2"
 CONFIG_TEMPLATE_FILE = "config.ini.j2"
