@@ -38,7 +38,7 @@ slack_sdk = "~=3.14"
 
 [tool.poetry.dev-dependencies]
 black = "~=22.0"
-ruff = "^0.0.216"
+ruff = "~=0.0.216"
 
 [tool.ruff]
 exclude = [
