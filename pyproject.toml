@@ -37,7 +37,7 @@ pyyaml = "~=6.0"
 slack_sdk = "~=3.14"
 
 [tool.poetry.dev-dependencies]
-black = "~=22.0"
+black = "*"
 ruff = "~=0.0.216"
 
 [tool.ruff]
