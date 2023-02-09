@@ -1,4 +1,3 @@
-import configparser
 import os
 import stat
 import time
@@ -12,18 +11,19 @@ import jinja2
 import yaml
 from slack_sdk import WebClient
 
+from .config import CONFIG_FILE
+from .config import DATA_FOLDER
+from .config import read_config
 from .filters import emojify
 from .filters import ensure_list
 from .filters import slack_bold
 
-CONFIG_FILE = "config.ini"
 STANDUP_TEMPLATE_FILE = "standup.slack.j2"
 CONFIG_TEMPLATE_FILE = "config.ini.j2"
 
 TODAY_TIME_STRUCT = time.localtime()
 TODAY = datetime(*TODAY_TIME_STRUCT[:3])  # Keep only year, month and day
 
-DATA_FOLDER = "data"
 YEAR_FOLDER_FORMAT = r"%Y"  # e.g. '2018'
 MONTH_FOLDER_FORMAT = r"%m - %B"  # e.g. '06 - June'
 STANDUP_FILENAME_FORMAT = r"%Y-%m-%d.yml"  # e.g. '2018-01-09.yml'
@@ -52,12 +52,6 @@ TEMPLATE_ENV.filters.update(
 )
 STANDUP_TEMPLATE = TEMPLATE_ENV.get_template(STANDUP_TEMPLATE_FILE)
 CONFIG_TEMPLATE = TEMPLATE_ENV.get_template(CONFIG_TEMPLATE_FILE)
-
-
-def read_config():
-    config = configparser.ConfigParser()
-    config.read(CONFIG_FILE)
-    return config
 
 
 def get_formatted_standup(data):
