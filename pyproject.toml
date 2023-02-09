@@ -40,6 +40,9 @@ slack_sdk = "~=3.14"
 black = "*"
 ruff = "~=0.0.216"
 
+[tool.black]
+target-version = ['py310']
+
 [tool.ruff]
 exclude = [
     '.git',
