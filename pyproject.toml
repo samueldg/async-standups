@@ -49,10 +49,12 @@ exclude = [
 ignore = []
 line-length = 99
 select = [
+    'B',
     'E',
     'F',
     'I',
     'Q',
+    'UP',
     'W',
 ]
 
