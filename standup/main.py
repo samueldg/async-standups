@@ -7,19 +7,14 @@ from enum import IntEnum
 from pathlib import Path
 
 import click
-import jinja2
 import yaml
 from slack_sdk import WebClient
 
 from .config import CONFIG_FILE
 from .config import DATA_FOLDER
 from .config import read_config
-from .filters import emojify
-from .filters import ensure_list
-from .filters import slack_bold
-
-STANDUP_TEMPLATE_FILE = "standup.slack.j2"
-CONFIG_TEMPLATE_FILE = "config.ini.j2"
+from .templating import CONFIG_TEMPLATE
+from .templating import STANDUP_TEMPLATE
 
 TODAY_TIME_STRUCT = time.localtime()
 TODAY = datetime(*TODAY_TIME_STRUCT[:3])  # Keep only year, month and day
@@ -39,19 +34,6 @@ DAYS_OFF = {
     WeekDays.SATURDAY,
     WeekDays.SUNDAY,
 }
-
-
-TEMPLATE_LOADER = jinja2.PackageLoader(package_name="standup")
-TEMPLATE_ENV = jinja2.Environment(loader=TEMPLATE_LOADER)
-TEMPLATE_ENV.filters.update(
-    {
-        "emojify": emojify,
-        "slack_bold": slack_bold,
-        "ensure_list": ensure_list,
-    },
-)
-STANDUP_TEMPLATE = TEMPLATE_ENV.get_template(STANDUP_TEMPLATE_FILE)
-CONFIG_TEMPLATE = TEMPLATE_ENV.get_template(CONFIG_TEMPLATE_FILE)
 
 
 def get_formatted_standup(data):
