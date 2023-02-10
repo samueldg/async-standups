@@ -1,19 +1,15 @@
-import os
-import stat
 import time
 from datetime import datetime
 from datetime import timedelta
 from enum import IntEnum
-from pathlib import Path
 
 import click
 import yaml
 from slack_sdk import WebClient
 
-from .config import CONFIG_FILE
-from .config import DATA_FOLDER
+from .config import DATA_DIR
 from .config import read_config
-from .templating import CONFIG_TEMPLATE
+from .config import write_config
 from .templating import STANDUP_TEMPLATE
 
 TODAY_TIME_STRUCT = time.localtime()
@@ -59,7 +55,7 @@ def get_standup_file_path(date):
     year_folder = date.strftime(YEAR_FOLDER_FORMAT)
     month_folder = date.strftime(MONTH_FOLDER_FORMAT)
     standup_filename = date.strftime(STANDUP_FILENAME_FORMAT)
-    return Path(DATA_FOLDER, year_folder, month_folder, standup_filename)
+    return DATA_DIR / year_folder / month_folder / standup_filename
 
 
 def generate_new_standup_data(from_date, to_date, interactive=False):
@@ -182,14 +178,11 @@ def bootstrap():
     icon_emoji = ":" + icon_emoji.strip(":") + ":"
 
     # Render the config file
-    config = CONFIG_TEMPLATE.render(
+    write_config(
         token=token,
         username=username,
         icon_emoji=icon_emoji,
     )
-    with open(CONFIG_FILE, "x") as config_file:
-        config_file.write(config)
-    os.chmod(CONFIG_FILE, stat.S_IRUSR | stat.S_IWUSR)
 
     # Indicate successful completion
     click.echo(
