@@ -125,8 +125,6 @@ def publish(dry_run):
     """
     config = read_config()
     channel = config["slack"]["channel"]
-    username = config["slack"]["username"]
-    icon_emoji = config["slack"]["icon_emoji"]
 
     standup_data_file_path = get_standup_file_path(TODAY)
 
@@ -136,14 +134,12 @@ def publish(dry_run):
     rendered_text = get_formatted_standup(standup_data)
 
     if dry_run:
-        print(f"#{channel} (as @{username} | {icon_emoji})\n{rendered_text}")
+        print(f"#{channel}\n{rendered_text}")
     else:
         slack = WebClient(token=config["slack"]["api_token"])
         slack.chat_postMessage(
             channel=channel,
             text=rendered_text,
-            username=username,
-            icon_emoji=icon_emoji,
         )
 
 
@@ -172,17 +168,8 @@ def bootstrap():
     click.launch("https://app.slack.com/apps-manage/")
     token = click.prompt("Copy your Slack token here, then press <enter>")
 
-    # Get other Slack config options
-    username = click.prompt("Slack username")
-    icon_emoji = click.prompt("Icon emoji")
-    icon_emoji = ":" + icon_emoji.strip(":") + ":"
-
     # Render the config file
-    write_config(
-        token=token,
-        username=username,
-        icon_emoji=icon_emoji,
-    )
+    write_config(token=token)
 
     # Indicate successful completion
     click.echo(

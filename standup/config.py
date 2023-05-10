@@ -39,11 +39,9 @@ def read_config():
 
 
 # TODO: Change this ridiculous interface for writing the config.
-def write_config(token, username, icon_emoji):
+def write_config(token):
     config = CONFIG_TEMPLATE.render(
         token=token,
-        username=username,
-        icon_emoji=icon_emoji,
     )
     with open(CONFIG_FILE, "x") as config_file:
         config_file.write(config)
