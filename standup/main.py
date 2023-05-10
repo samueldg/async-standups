@@ -163,22 +163,26 @@ def bootstrap():
 
             Get the token from:
 
-              OAuth & Permissions > User OAuth Token.\
+              OAuth & Permissions > User OAuth Token.
             """
-        ),
-        color="green",
+        )
     )
     click.pause("Press any key to open a new browser tab to get your token...")
     click.launch("https://api.slack.com/apps")
-    token = click.prompt("Copy your User OAuth Token here, then press <enter>")
+
+    token = click.prompt("\nEnter your User OAuth Token")
+    channel = click.prompt("Enter the Channel ID where you'll post updates")
 
     # Render the config file
-    write_config(token=token)
+    write_config(token=token, channel=channel)
 
     # Indicate successful completion
+    click.secho(
+        "All set!",
+        fg="green",
+    )
     click.echo(
-        f"All set! Look at {CONFIG_FILE} to view your config.",
-        color="green",
+        f"Please review your config: {CONFIG_FILE}",
     )
 
 
