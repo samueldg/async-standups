@@ -134,7 +134,7 @@ def publish(dry_run):
     rendered_text = get_formatted_standup(standup_data)
 
     if dry_run:
-        print(f"#{channel}\n{rendered_text}")
+        click.echo(f"#{channel}\n{rendered_text}")
     else:
         slack = WebClient(token=config["slack"]["api_token"])
         slack.chat_postMessage(
