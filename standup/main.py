@@ -7,6 +7,7 @@ import click
 import yaml
 from slack_sdk import WebClient
 
+from .config import CONFIG_FILE
 from .config import DATA_DIR
 from .config import read_config
 from .config import write_config
@@ -173,7 +174,7 @@ def bootstrap():
 
     # Indicate successful completion
     click.echo(
-        "All set! Look at ./config.ini to view your config.",
+        f"All set! Look at {CONFIG_FILE} to view your config.",
         color="green",
     )
 
