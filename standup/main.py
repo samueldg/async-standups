@@ -2,6 +2,7 @@ import time
 from datetime import datetime
 from datetime import timedelta
 from enum import IntEnum
+from textwrap import dedent
 
 import click
 import yaml
@@ -149,25 +150,27 @@ def bootstrap():
     """Create the basic project setup and configuration.
 
     This will:
-      - Create the scaffolding for data files.
+      - Create the scaffolding for data files. (TODO)
       - Create a file to store your Slack token and configuration.
     """
-    # Get the Slack app token
+    # Get the User OAuth Token from Slack
     click.echo(
-        "You will be redirected to Slack's app management.",
-        color="green",
-    )
-    click.echo(
-        "Please get an app token for the app that will post your standups.",
-        color="green",
-    )
-    click.echo(
-        "The app will need the chat:write.customize permission.",
+        dedent(
+            """\
+            You will be redirected to Slack's app management.
+            Please select the app that will post your standups.
+            The app will need the chat:write permission.
+
+            Get the token from:
+
+              OAuth & Permissions > User OAuth Token.\
+            """
+        ),
         color="green",
     )
     click.pause("Press any key to open a new browser tab to get your token...")
-    click.launch("https://app.slack.com/apps-manage/")
-    token = click.prompt("Copy your Slack token here, then press <enter>")
+    click.launch("https://api.slack.com/apps")
+    token = click.prompt("Copy your User OAuth Token here, then press <enter>")
 
     # Render the config file
     write_config(token=token)
