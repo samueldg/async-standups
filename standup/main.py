@@ -2,11 +2,13 @@ import time
 from datetime import datetime
 from datetime import timedelta
 from enum import IntEnum
+from textwrap import dedent
 
 import click
 import yaml
 from slack_sdk import WebClient
 
+from .config import CONFIG_FILE
 from .config import DATA_DIR
 from .config import read_config
 from .config import write_config
@@ -125,8 +127,6 @@ def publish(dry_run):
     """
     config = read_config()
     channel = config["slack"]["channel"]
-    username = config["slack"]["username"]
-    icon_emoji = config["slack"]["icon_emoji"]
 
     standup_data_file_path = get_standup_file_path(TODAY)
 
@@ -136,14 +136,12 @@ def publish(dry_run):
     rendered_text = get_formatted_standup(standup_data)
 
     if dry_run:
-        print(f"#{channel} (as @{username} | {icon_emoji})\n{rendered_text}")
+        click.echo(f"#{channel}\n{rendered_text}")
     else:
         slack = WebClient(token=config["slack"]["api_token"])
         slack.chat_postMessage(
             channel=channel,
             text=rendered_text,
-            username=username,
-            icon_emoji=icon_emoji,
         )
 
 
@@ -152,42 +150,39 @@ def bootstrap():
     """Create the basic project setup and configuration.
 
     This will:
-      - Create the scaffolding for data files.
+      - Create the scaffolding for data files. (TODO)
       - Create a file to store your Slack token and configuration.
     """
-    # Get the Slack app token
+    # Get the User OAuth Token from Slack
     click.echo(
-        "You will be redirected to Slack's app management.",
-        color="green",
-    )
-    click.echo(
-        "Please get an app token for the app that will post your standups.",
-        color="green",
-    )
-    click.echo(
-        "The app will need the chat:write.customize permission.",
-        color="green",
+        dedent(
+            """\
+            You will be redirected to Slack's app management.
+            Please select the app that will post your standups.
+            The app will need the chat:write permission.
+
+            Get the token from:
+
+              OAuth & Permissions > User OAuth Token.
+            """
+        )
     )
     click.pause("Press any key to open a new browser tab to get your token...")
-    click.launch("https://app.slack.com/apps-manage/")
-    token = click.prompt("Copy your Slack token here, then press <enter>")
+    click.launch("https://api.slack.com/apps")
 
-    # Get other Slack config options
-    username = click.prompt("Slack username")
-    icon_emoji = click.prompt("Icon emoji")
-    icon_emoji = ":" + icon_emoji.strip(":") + ":"
+    token = click.prompt("\nEnter your User OAuth Token")
+    channel = click.prompt("Enter the Channel ID where you'll post updates")
 
     # Render the config file
-    write_config(
-        token=token,
-        username=username,
-        icon_emoji=icon_emoji,
-    )
+    write_config(token=token, channel=channel)
 
     # Indicate successful completion
+    click.secho(
+        "All set!",
+        fg="green",
+    )
     click.echo(
-        "All set! Look at ./config.ini to view your config.",
-        color="green",
+        f"Please review your config: {CONFIG_FILE}",
     )
 
 

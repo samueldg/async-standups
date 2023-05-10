@@ -38,13 +38,8 @@ def read_config():
     return config
 
 
-# TODO: Change this ridiculous interface for writing the config.
-def write_config(token, username, icon_emoji):
-    config = CONFIG_TEMPLATE.render(
-        token=token,
-        username=username,
-        icon_emoji=icon_emoji,
-    )
+def write_config(**kwargs):
+    config = CONFIG_TEMPLATE.render(**kwargs)
     with open(CONFIG_FILE, "x") as config_file:
         config_file.write(config)
     os.chmod(CONFIG_FILE, stat.S_IRUSR | stat.S_IWUSR)
