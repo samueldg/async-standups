@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "standup"
-version = "0.0.1"
+version = "0.0.2"
 description = "Write, publish, and keep track of your async standup reports"
 authors = [
     "Samuel Dion-Girardeau <samuel.diongirardeau@gmail.com>"
