@@ -37,20 +37,21 @@ pyyaml = "~=6.0"
 slack_sdk = "~=3.14"
 
 [tool.poetry.dev-dependencies]
-black = "*"
-ruff = "~=0.0.216"
+ruff = "~=0.3.7"
 
 [tool.black]
-target-version = ['py310']
 
 [tool.ruff]
+target-version = 'py310'
+line-length = 99
 exclude = [
     '.git',
     '__pycache__',
     '.vscode',
 ]
+
+[tool.ruff.lint]
 ignore = []
-line-length = 99
 select = [
     'B',
     'E',
@@ -60,8 +61,11 @@ select = [
     'UP',
     'W',
 ]
+unfixable = [
+    'F841',  # Don't delete unused vars
+]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 force-single-line = true
 
 [tool.poetry.scripts]
