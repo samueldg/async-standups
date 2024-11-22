@@ -71,3 +71,6 @@ unfixable = [
 
 [tool.ruff.lint.isort]
 force-single-line = true
+
+[tool.uv]
+package = true

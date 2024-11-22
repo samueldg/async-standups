@@ -192,7 +192,7 @@ wheels = [
 [[package]]
 name = "standup"
 version = "0.0.2"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "click" },
     { name = "jinja2" },
