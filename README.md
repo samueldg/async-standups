@@ -6,11 +6,13 @@ The standup data will be saved and manipulated in YAML files, and published to S
 
 ## Setup
 
-You will need [Python 3.8+](https://www.python.org/downloads/) and [Poetry](https://github.com/python-poetry/poetry) installed. Then clone this repo and run:
+You will need [Python 3.8+](https://www.python.org/downloads/) and [uv](https://docs.astral.sh/uv) installed.
+
+Then clone this repo and run:
 
 ```sh
-poetry install
-poetry run standup bootstrap
+uv sync
+uv run standup bootstrap
 ```
 
 ## Usage
