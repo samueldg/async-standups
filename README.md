@@ -6,7 +6,7 @@ The standup data will be saved and manipulated in YAML files, and published to S
 
 ## Setup
 
-You will need [Python 3.8+](https://www.python.org/downloads/) and [uv](https://docs.astral.sh/uv) installed.
+You will need [Python 3.9+](https://www.python.org/downloads/) and [uv](https://docs.astral.sh/uv) installed.
 
 Then clone this repo and run:
 
