@@ -9,7 +9,6 @@ recursive-exclude .vscode/ *
 recursive-exclude .git/ *
 recursive-exclude data/ *
 
-exclude .flake8
 exclude .gitignore
 exclude config.ini
 exclude uv.lock
